@@ -33,7 +33,7 @@
 
 #jetbrain files
 *.idea
-*cmake-build-debug
+cmake-build-debug/
 *.build
 
 *.cmake
