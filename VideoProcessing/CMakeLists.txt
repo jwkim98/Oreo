@@ -1,7 +1,42 @@
-cmake_minimum_required(VERSION 3.14)
-project(VideoProcessing)
+# CMake version
+cmake_minimum_required(VERSION 3.8.2 FATAL_ERROR)
 
-set(CMAKE_CXX_STANDARD 17)
+# Include cmake modules
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 
+# Declare project
+project(Oreo LANGUAGES CXX CUDA)
 
-add_executable(VideoProcessing main.cpp)
+# Set output directories
+set(DEFAULT_CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+
+# Set enable output of compile commands during generation
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# Includes
+include_directories(Includes)
+include_directories(Libraries)
+
+# Compile options
+include(CMake/CompileOptions.cmake)
+
+# Build type - Release by default
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+
+# Overrides
+set(CMAKE_MACOSX_RPATH ON)
+
+# Project modules
+set(BUILD_GTEST ON CACHE BOOL "" FORCE)
+set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+cmake_policy(SET CMP0063 NEW)
+set(BENCHMARK_ENABLE_TESTING OFF CACHE BOOL "" FORCE)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
+add_subdirectory(Sources/oreo)
