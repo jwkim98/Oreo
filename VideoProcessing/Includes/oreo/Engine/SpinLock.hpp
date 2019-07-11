@@ -1,8 +1,10 @@
 //
 // Created by jwkim98 on 6/27/19.
 //
+
+
 #include <oreo/Engine/SpinLock-Decl.hpp>
-#include "SpinLock-Decl.hpp"
+#include <atomic>
 
 namespace Captain {
 
